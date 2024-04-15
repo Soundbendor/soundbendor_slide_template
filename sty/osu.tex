@@ -1,0 +1,325 @@
+%------------------------------------------------
+% Oregon State University
+% by Patrick Donnelly
+% Last Updated: 11/20/2022
+%-----------------------------------------------
+
+%------------------------------------------------
+% Beamer Theme
+%-----------------------------------------------
+\usetheme[block=fill]{metropolis}
+
+%------------------------------------------------
+% Packages to Include
+%-----------------------------------------------
+\usepackage{appendixnumberbeamer}
+\usepackage{color}
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+\usepackage{xcolor}
+\usepackage{hyperref}
+    \hypersetup{
+        colorlinks=true,
+        citecolor=beaver,
+        linkcolor=beaver,
+        filecolor=beaver,      
+        urlcolor=beaver,
+        }
+    \urlstyle{same}
+\usepackage{multimedia}
+\usepackage{media9}   % If embedding sound/video
+\usepackage{pgfplots}
+\usepackage{ragged2e}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepgfplotslibrary{dateplot}
+\usepackage{xspace}
+\usepackage{fancyvrb}
+\usepackage{listings}
+\usepackage{etoolbox}% >= v2.1 2011-01-03
+\usepackage{xpatch}
+\usepackage[algoruled, noline, noend]{algorithm2e}
+%\usepackage[utf8]{inputenc}
+\usepackage[algoruled, noline]{algorithm2e}
+\usepackage{ragged2e}
+\usepackage{animate}
+\usepackage[normalem]{ulem}
+\usepackage{cancel}
+\usepackage{subfigure}
+
+%===========
+% Variables
+%===========
+
+%-------------
+% Logo Graphic 
+%-------------
+% OSU, OSUC, or Soundbendor
+\def \logoOSUC {OSU-cascades}
+\def \logoOSUhor {OSU-horizontal}
+\def \logoOSUver {OSU-vertical}
+\def \logoSoundbendor {Soundbendor}
+\def \figPath {sty/logo/}   % path to logos
+\def \logoWidth {0.4}        % OSU logo width (default 0.4)
+\def \labWidth  {0.3}       % lab logo width (default 0.25)
+
+% Campus: Corvallis or Cascades
+\newcommand*{\campus}[1]{%
+    \def\param{#1}%
+    \def\corvallis{Corvallis}%
+    \def\cascades{Cascades}%
+    \ifx\param\corvallis
+      % Corvallis
+      \def\logoOSU{\logoOSUhor}
+    \else
+      % Cascades
+      \def\logoOSU{\logoOSUC}
+    \fi
+}
+
+%-----------------
+% Title Page Logos
+%-----------------
+% Mode: Research or Teaching
+\newcommand*{\presentmode}[1]{%
+    \def\param{#1}%
+    \def\research{research}
+    \def\teaching{teaching}
+    
+    \ifx\param\teaching
+    %\def\titleResearch{0}  
+    % Title slide for Teaching: hide lab logo
+    \titlegraphic{
+        \vspace{6.5cm}
+        \hfill\includegraphics[width=\logoWidth\textwidth]{\figPath\logoOSU}
+    }
+    \else
+    \def\titleResearch{1}
+    % Title slide for Research: show lab logo
+    \titlegraphic{
+        \begin{tikzpicture}[remember picture,overlay]
+        \node[opacity=0.9,anchor=north east,xshift=-10pt,yshift=-5pt] at (current page.north east) {\includegraphics[height=15mm]{\figPath\logoOSU}};
+        \end{tikzpicture}
+
+        % lab, bottom centered
+        \begin{tikzpicture}[remember picture,overlay]
+          \node[opacity=0.8,anchor=south,xshift=0pt,yshift=0pt] at (current page.south) {\includegraphics[height=15mm]{sty/logo/soundbendor.png}};
+        \end{tikzpicture}
+        }
+
+    % Frame Bottom Left: Soundbendor Lab (Research)
+    \addtobeamertemplate{frametitle}{}{%
+        \begin{tikzpicture}[remember picture,overlay]
+          \node[opacity=0.6,anchor=south west,xshift=4pt,yshift=0pt] at (current page.south west) {\includegraphics[height=8mm]{sty/logo/soundbendor.png}};
+        \end{tikzpicture}}        
+    \fi
+}
+
+%----------------
+% Frame Page Logo
+%----------------
+
+% Top Right: OSU vertical
+\addtobeamertemplate{frametitle}{}{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[opacity=0.8,anchor=north east,xshift=-8pt,yshift=0pt] at (current page.north east) {\includegraphics[height=7mm]{sty/logo/OSU-vertical-white.png}};
+    \end{tikzpicture}}
+
+%-----------------
+% Useful Operators
+%-----------------
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\argmax}{argmax}
+\newcommand*{\argminl}{\argmin\limits}
+\newcommand*{\argmaxl}{\argmax\limits}
+
+%=======================
+% Template Modifications
+%=======================
+\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+\setbeamercolor{frametitle}{fg=white,bg=beaver!90}
+\setbeamercolor{title separator}{fg=beaver}
+\setbeamercolor{alerted text}{fg=solarflare}
+\setbeamertemplate{caption}{\raggedright\insertcaption\par} % remove word Figure 
+
+%-----------
+% OSU Colors
+%-----------
+\definecolor{beaver}{HTML}{D73F09}
+%   paddletail black = 000000
+%   bucktooth white = FFFFFF
+% Secondary - normal
+\definecolor{pinestand}{HTML}{4A773C}
+\definecolor{hightide}{HTML}{00859B}
+\definecolor{luminance}{HTML}{FFB500}
+\definecolor{stratosphere}{HTML}{006A8E}
+% Secondary - light
+\definecolor{reindeermoss}{HTML}{C4D6A4}
+\definecolor{seafoam}{HTML}{B8DDE1}
+\definecolor{candela}{HTML}{FDD26E}
+\definecolor{moondust}{HTML}{C6DAE7}
+% Secondary - dark
+\definecolor{hopbine}{HTML}{AA9D2E}
+\definecolor{roguewave}{HTML}{0D5257}
+\definecolor{solarflare}{HTML}{D3832B}
+\definecolor{starcanvas}{HTML}{003B5C}
+% Secondary - grays
+\definecolor{till}{HTML}{B7A99A}
+\definecolor{coastline}{HTML}{A7ACA2}
+\definecolor{highdesert}{HTML}{7A6855}
+\definecolor{crater}{HTML}{8E9089}
+
+%-------
+% Blocks 
+%-------
+\setbeamertemplate{blocks}[rounded][shadow=true]   % rounded
+
+% Example block
+\setbeamercolor{block title example}{fg=pinestand} 
+\setbeamerfont{block title example}{series=\bfseries} 
+% Alter block
+\setbeamercolor{block title alerted}{fg=beaver} 
+\setbeamerfont{block title alerted}{series=\bfseries} 
+
+%------------
+% Code Blocks
+%------------
+\lstset{language=C++,
+		basicstyle=\scriptsize\ttfamily,
+		abovecaptionskip=0pt,belowcaptionskip =6pt,
+		framextopmargin=-\topsep, 
+                      keywordstyle=\color{stratosphere}\bfseries,
+		morekeywords={},
+		%literate={\&}{{\CodeSymbol{\&}}}1{**}{{\CodeSymbol{**}}}1,
+	  stringstyle=\color{solarflare}\bfseries,
+        commentstyle=\color{pinestand}\bfseries,        
+		%morecomment=[l][\color{brown}]{\#},
+	    showstringspaces=false,
+	    escapechar=\@
+     }
+
+
+%------------------
+% Frame environment
+%------------------
+\usetikzlibrary{shadows}
+\usepackage[%
+    framemethod=tikz,
+    skipbelow=\topskip,
+    skipabove=\topskip
+]{mdframed}
+\mdfsetup{%
+    leftmargin=0pt,
+    rightmargin=0pt,
+	shadow=true,
+	shadowsize=5pt,
+    backgroundcolor=coastline!20,
+    middlelinecolor=gray,
+    roundcorner=6
+}
+\BeforeBeginEnvironment{lstlisting}{\begin{mdframed}\vspace{-0.2em}}
+\AfterEndEnvironment{lstlisting}{\vspace{-0.5em}\end{mdframed}}
+
+\makeatletter
+\gdef\lst@commenttypes{l,L,f,s,n}
+\gdef\lst@CommentDM@L#1#2#3\@empty#4#5#6{%
+    \lst@CArg #2\relax\lst@DefDelimB{}{}{}#4{#1}{#6\lst@Lmodetrue}%
+    \lst@CArg #3\relax\lst@DefDelimE{}{}{}#5{#1}}
+\makeatletter
+
+\newmdenv[innerlinewidth=0.5pt, roundcorner=4pt,linecolor=starcanvas,innerleftmargin=6pt,
+innerrightmargin=6pt,innertopmargin=6pt,innerbottommargin=6pt]{roundbox}
+
+%----------------
+% Itemize spacing 
+%----------------
+% Enum letters not numbers			
+\renewcommand{\theenumi}{\Alph{enumi}}
+
+\setlength\leftmargini  {2em}
+\setlength\leftmarginii {2em}
+\setlength\leftmarginiii{2em}
+\setlength  \labelsep   {.5em}
+\setlength  \labelwidth{\leftmargini}
+\addtolength\labelwidth{-\labelsep}
+
+\def\@listi{\leftmargin\leftmargini
+            \topsep -4\p@ \@plus0\p@ \@minus0\p@
+            \parsep 0\p@
+            \itemsep0\p@ \@plus0\p@ \@minus0\p@}
+\let\@listI\@listi
+
+% TODO Need to change sizes at level 2 and 3
+\def\@listii{\leftmargin\leftmarginii
+              \topsep    2\p@ \@plus1\p@ \@minus2\p@
+              \parsep    0\p@   \@plus\p@
+              \itemsep   \parsep}
+\def\@listiii{\leftmargin\leftmarginiii
+              \topsep    2\p@ \@plus1\p@ \@minus2\p@
+              \parsep    0\p@   \@plus\p@
+              \itemsep   \parsep}  
+        
+
+%-------------
+% Bullet shape 
+%-------------
+\def \bulletcolor {beaver!90}
+\setbeamertemplate{items}[circle]
+\setbeamercolor{item}{fg=\bulletcolor} 
+\setbeamercolor{description item}{fg=\bulletcolor} 
+
+\defbeamertemplate{itemize item}{squarealt}%
+{\tiny\raise.5ex\hbox{\donotcoloroutermaths\color{\bulletcolor}$\blacksquare$}}
+\defbeamertemplate{itemize subitem}{squarealt}%
+  {\tiny\raise.4ex\hbox{\donotcoloroutermaths$\triangleright$}}
+\defbeamertemplate{itemize subsubitem}{squarealt}%
+  {\tiny\raise.3ex\hbox{\donotcoloroutermaths$\square$}}
+  
+\defbeamertemplate{itemize item}{circlealt}%
+  {\small\raise.2ex\hbox{\donotcoloroutermaths$\bullet$}}
+\defbeamertemplate{itemize subitem}{circlealt}%
+  {\small\raise.1ex\hbox{\donotcoloroutermaths$\circ$}}
+  \defbeamertemplate{itemize subsubitem}{circlealt}%
+{\scriptsize\raise.1ex\hbox{\donotcoloroutermaths$\bullet$}}
+\def\circletext{circle}
+
+\ifx\beamer@fancy@bullet\circletext
+  \setbeamertemplate{items}[circlealt]
+\else
+  \setbeamertemplate{items}[squarealt]
+\fi
+
+%-------------------------
+% Overlay Support
+%-------------------------
+% strikethrough
+\renewcommand<>{\sout}[1]{\alt#2{\beameroriginal{\sout}{#1}}{#1}}
+
+
+%-------------------------
+% Algorithm2e (pseudocode)
+%-------------------------
+% Change 
+\SetAlFnt{\small\sf}
+\SetAlCapFnt{\small\sf}
+\SetAlCapNameFnt{\small\sf}
+
+%\SetAlFnt{\footnotesize\sf}
+\newcommand{\mykeywordsty}[1]{\textbf{\textcolor{stratosphere}{#1}}}
+\SetKwSty{mykeywordsty}
+%\SetFuncSty{mykeywordsty}
+%\SetFuncArgSty{mykeywordsty}
+
+\renewcommand{\thealgocf}{}
+\linespread{1.0}\selectfont
+\NoCaptionOfAlgo
+\DontPrintSemicolon
+
+\SetKwInOut{Input}{inputs}
+\SetKwInOut{Local}{local}
+\SetKwInOut{Output}{output}
+\SetKwProg{Fn}{function}{}{}
+\SetKwProg{Unless}{unless}{\ do}{}
+\SetKwProg{Repeat}{repeat until}{\ do}{}
+
+
